@@ -10,6 +10,9 @@ import { Button } from 'antd';
 import { Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 
+
+
+
 const onChange: DatePickerProps['onChange'] = (date, dateString) => {
     console.log(date, dateString);
 };
@@ -25,27 +28,20 @@ interface DataType {
 
 const columns: ColumnsType<DataType> = [
     {
-        title: 'Inspection',
+        title: 'items',
         dataIndex: 'Inspection',
         key: 'Inspection',
 
     },
     {
-        title: 'PRD Lot',
+        title: 'Source',
         dataIndex: 'PRDLot',
         key: 'PRDLot',
     },
     {
-        title: 'Part Name',
+        title: 'Flag',
         dataIndex: 'PartName',
         key: 'PartName',
-    },
-    {
-        title: 'PRD Date',
-        dataIndex: 'PRDDate',
-        key: 'PRDDate',
-
-
     },
 
 ];
@@ -75,76 +71,42 @@ const data: DataType[] = [
     },
 ];
 
-function Page_A() {
+
+function RegisterDataItems() {
+
+
+
     return (
         <>
-            <Row justify="start" >
-                <Col >
-                    <Typography.Title level={2} style={{ margin: 5, paddingBottom: 30 }}>
-                        Complaint Record
-                    </Typography.Title>
-                </Col>
-            </Row>
-            <Row justify="center">
-                <Col xs={24} xl={12}>
-                    <Steps
-                        items={[
-                            {
-                                title: 'Login',
-                                status: 'finish',
-                                icon: <FaRegCircleCheck />,
-                            },
-                            {
-                                title: 'Verification',
-                                status: 'finish',
-                                icon: <FaRegCircleCheck />,
-                            },
-                            {
-                                title: 'Pay',
-                                status: 'process',
-                                icon: <LoadingOutlined />,
-                            },
-                            {
-                                title: 'Done',
-                                status: 'wait',
-                                icon: <FaRegCircle />,
-                            },
-                        ]} labelPlacement="vertical"
-                    />
-                </Col>
-            </Row>
+
+
 
             <Row justify="start">
                 <Col >
                     <Typography.Title level={2} style={{ margin: 5, paddingBottom: 30 }}>
-                        Product Identify
+                        Register Data Items
                     </Typography.Title>
                 </Col>
             </Row>
 
             <Row justify="start" align="middle" gutter={10} style={{ paddingBottom: '5px' }}>
                 <Col lg={2} xs={24} xl={2} >
-                    Method :
+                    Item :
                 </Col>
 
                 <Col lg={8} xs={20} xl={6}>
-                    <Input placeholder="Basic usage" />
+                    <Input />
                 </Col>
 
-                <Col >
-                    <FaMagnifyingGlass onClick={() => {
 
-                        console.log("xxxx")
-                    }} />
-                </Col>
             </Row >
             <Row justify="start" align="middle" gutter={10} style={{ paddingBottom: '5px' }}>
                 <Col lg={2} xs={24} xl={2} >
-                    Search :
+                    Source :
                 </Col>
 
                 <Col lg={8} xs={20} xl={6}>
-                    <Input placeholder="Basic usage" />
+                    <Input />
                 </Col>
 
 
@@ -152,16 +114,16 @@ function Page_A() {
 
             <Row justify="start" align="middle" gutter={10} style={{ paddingBottom: '5px' }}>
                 <Col lg={2} xs={24} xl={2}>
-                    Date :
+                    Search Flag :
                 </Col>
 
                 <Col lg={8} xs={20} xl={6}>
-                    <DatePicker onChange={onChange} style={{ width: '100%' }} />
+
                 </Col>
 
                 <Col >
                     <Button shape="round" style={{ background: '#8c8c8c', color: '#fff', borderColor: 'transparent' }}>
-                        Search
+                        Register
                     </Button>
                 </Col>
             </Row >
@@ -184,10 +146,8 @@ function Page_A() {
 
 
         </>
+
     )
 }
 
-export default Page_A
-
-
-
+export default RegisterDataItems

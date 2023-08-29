@@ -3,6 +3,7 @@ import { Button, Checkbox, Form, Input } from 'antd';
 import { Card } from 'antd';
 import { Typography } from 'antd';
 import { Space } from 'antd'
+import axios from 'axios';
 
 
 const { Title } = Typography;
@@ -11,17 +12,49 @@ function LoginPage() {
 
     const onFinish = (values: any) => {
         console.log('Success:', values);
+
+        let user = values.username;
+        let pass = values.password;
+
+        const param = { user: user, pass: pass };
+        // console.log(param);
+
+        axios
+            .post("http://localhost:6180/logIn", param, {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            })
+            .then((res) => {
+                console.log(res.data[0])
+
+                if (res.data.length == 1) {
+
+                    let json_data = JSON.stringify(res.data[0], null, 2);
+                    console.log(json_data);
+                    localStorage.setItem("json", json_data);
+                    // window.location.href = "/RegisterComplaintMode";
+                }
+            })
+
+            .catch((err) => {
+                console.log(err);
+            });
     };
 
     const onFinishFailed = (errorInfo: any) => {
         console.log('Failed:', errorInfo);
+
+
+
     };
 
     type FieldType = {
         username?: string;
         password?: string;
-        remember?: string;
     };
+
+
     return (
 
         < >
@@ -42,7 +75,7 @@ function LoginPage() {
                         labelCol={{ span: 8 }}
                         wrapperCol={{ span: 16 }}
                         style={{ maxWidth: 600 }}
-                        initialValues={{ remember: true }}
+                        initialValues={{ username: "MTL90156", password: "password" }}
                         onFinish={onFinish}
                         onFinishFailed={onFinishFailed}
                         autoComplete="off"
@@ -50,6 +83,7 @@ function LoginPage() {
                         <Form.Item<FieldType>
                             label="Username"
                             name="username"
+
                             rules={[{ required: true, message: 'Please input your username!' }]}
                         >
                             <Input />
@@ -59,6 +93,7 @@ function LoginPage() {
                             label="Password"
                             name="password"
                             rules={[{ required: true, message: 'Please input your password!' }]}
+
                         >
                             <Input.Password />
                         </Form.Item>

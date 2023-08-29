@@ -1,4 +1,4 @@
-import { Col, Divider, Row, Input } from 'antd';
+import { Col, Divider, Row, Input, Space } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import { Steps } from 'antd';
 
@@ -10,75 +10,77 @@ import { Button } from 'antd';
 import { Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 
-const onChange: DatePickerProps['onChange'] = (date, dateString) => {
-    console.log(date, dateString);
-};
+import { FiInfo } from "react-icons/fi";
+import { useState } from 'react';
+import { NumericFormat } from 'react-number-format';
 
 interface DataType {
-
-    key: string;
-    Inspection: string;
-    PRDLot: string;
-    PartName: string;
-    PRDDate: string;
+    key: React.Key;
+    Items: string;
+    Sources: string;
+    UsingRate: string;
+    Effective: string;
 }
 
 const columns: ColumnsType<DataType> = [
     {
-        title: 'Inspection',
-        dataIndex: 'Inspection',
-        key: 'Inspection',
+        title: 'Items',
+        dataIndex: 'Items',
 
     },
     {
-        title: 'PRD Lot',
-        dataIndex: 'PRDLot',
-        key: 'PRDLot',
+        title: 'Sources',
+        dataIndex: 'Sources',
     },
     {
-        title: 'Part Name',
-        dataIndex: 'PartName',
-        key: 'PartName',
+        title: 'Using rate',
+        dataIndex: 'UsingRate',
+        align: 'right',
     },
     {
-        title: 'PRD Date',
-        dataIndex: 'PRDDate',
-        key: 'PRDDate',
-
-
+        title: 'Effective',
+        dataIndex: 'Effective',
+        align: 'right',
     },
+
 
 ];
 
-const data: DataType[] = [
-    {
+const data: DataType[] = [];
+for (let i = 0; i < 46; i++) {
+    data.push({
+        key: i,
+        Items: `Edward King ${i}`,
+        UsingRate: (Math.random() * 100).toLocaleString(undefined, { maximumFractionDigits: 2 }),
+        Effective: (Math.random() * 100).toLocaleString(undefined, { maximumFractionDigits: 2 }),
 
-        key: '1',
-        Inspection: 'TS9N09002',
-        PRDLot: '19YMA0214',
-        PartName: 'New York No. 1 Lake Park',
-        PRDDate: '02-Nov-2019',
-    },
-    {
-        key: '2',
-        Inspection: 'TS9N09002',
-        PRDLot: '19YMA0214',
-        PartName: 'London No. 1 Lake Park',
-        PRDDate: '02-Nov-2019',
-    },
-    {
-        key: '3',
-        Inspection: 'TS9N09002',
-        PRDLot: '19YMA0214',
-        PartName: 'Sydney No. 1 Lake Park',
-        PRDDate: '02-Nov-2019',
-    },
-];
+        Sources: `London, Park Lane no. ${i}`,
+    });
+}
 
-function Page_A() {
+
+function Page_B() {
+
+    const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
+
+
+
+    const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
+        console.log('selectedRowKeys changed: ', newSelectedRowKeys);
+        setSelectedRowKeys(newSelectedRowKeys);
+    };
+
+    const rowSelection = {
+        selectedRowKeys,
+        onChange: onSelectChange,
+    };
+    const hasSelected = selectedRowKeys.length > 0;
+
     return (
         <>
-            <Row justify="start" >
+
+
+            <Row justify="start">
                 <Col >
                     <Typography.Title level={2} style={{ margin: 5, paddingBottom: 30 }}>
                         Complaint Record
@@ -117,7 +119,7 @@ function Page_A() {
             <Row justify="start">
                 <Col >
                     <Typography.Title level={2} style={{ margin: 5, paddingBottom: 30 }}>
-                        Product Identify
+                        Information & Necessary Data
                     </Typography.Title>
                 </Col>
             </Row>
@@ -137,10 +139,20 @@ function Page_A() {
                         console.log("xxxx")
                     }} />
                 </Col>
+
+                <Col lg={2} xs={24} xl={2} >
+                    Part Name :
+                </Col>
+
+
+                <Col lg={8} xs={20} xl={6}>
+                    <Input placeholder="Basic usage" />
+                </Col>
             </Row >
+
             <Row justify="start" align="middle" gutter={10} style={{ paddingBottom: '5px' }}>
                 <Col lg={2} xs={24} xl={2} >
-                    Search :
+                    QCS No. :
                 </Col>
 
                 <Col lg={8} xs={20} xl={6}>
@@ -151,12 +163,46 @@ function Page_A() {
             </Row >
 
             <Row justify="start" align="middle" gutter={10} style={{ paddingBottom: '5px' }}>
-                <Col lg={2} xs={24} xl={2}>
-                    Date :
+                <Col lg={2} xs={24} xl={2} >
+                    Complaint Type :
                 </Col>
 
                 <Col lg={8} xs={20} xl={6}>
-                    <DatePicker onChange={onChange} style={{ width: '100%' }} />
+                    <Input placeholder="Basic usage" />
+                </Col>
+
+                <Col >
+                    <FaMagnifyingGlass onClick={() => {
+
+                        console.log("xxxx")
+                    }} />
+                </Col>
+            </Row >
+
+            <Row justify="start" align="middle" gutter={10} style={{ paddingBottom: '5px' }}>
+                <Col lg={2} xs={24} xl={2} >
+                    Phenomenon :
+                </Col>
+
+                <Col lg={8} xs={20} xl={6}>
+                    <Input placeholder="Basic usage" />
+                </Col>
+
+                <Col >
+                    <FaMagnifyingGlass onClick={() => {
+
+                        console.log("xxxx")
+                    }} />
+                </Col>
+            </Row >
+
+            <Row justify="start" align="middle" gutter={10}>
+                <Col lg={2} xs={24} xl={2} >
+                    Symptom :
+                </Col>
+
+                <Col lg={8} xs={20} xl={6}>
+                    <Input placeholder="Basic usage" />
                 </Col>
 
                 <Col >
@@ -164,19 +210,25 @@ function Page_A() {
                         Search
                     </Button>
                 </Col>
+
+                <Col >
+                    <Button type="text" style={{ color: '#2f54eb' }}>
+                        Register? <FiInfo style={{ marginLeft: "5" }} />
+                    </Button>
+
+                </Col>
             </Row >
 
+            <Row>
+                <Col xs={24}>
 
-            <Divider />
-            <Row justify="start">
-                <Col xs={24}><Table columns={columns} dataSource={data} /></Col>
-
+                    <Table rowSelection={rowSelection} columns={columns} dataSource={data} /></Col>
             </Row>
 
             <Row justify="start">
                 <Col >
                     <Button shape="round" style={{ background: '#8c8c8c', color: '#fff', borderColor: 'transparent' }}>
-                        Save
+                        Collect & Save
                     </Button>
                 </Col>
 
@@ -187,7 +239,4 @@ function Page_A() {
     )
 }
 
-export default Page_A
-
-
-
+export default Page_B
